@@ -1,0 +1,43 @@
+# Videorobot: controleert elke maandagochtend of alle YouTube-video's nog werken.
+# Problemen? Dan komt er een melding (issue) die je per mail krijgt.
+# Alles weer in orde? Dan sluit de melding vanzelf.
+name: Videocheck
+
+on:
+  schedule:
+    - cron: "41 5 * * 1"   # maandag 05:41 UTC = 06:41 Belgische wintertijd
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  videos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Video's controleren
+        id: check
+        env:
+          SHEET_CSV: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoe7zWFTQrhdwAXQv3ckLRjSR-xwkC4fB6ZJviVZVIM93zCs-ZH25S8w0Aq_dnjtp6mn_daJ7IswPv/pub?single=true&output=csv&gid=0"
+        run: python .github/scripts/videocheck.py
+      - name: Melding maken, bijwerken of sluiten
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROBLEMEN: ${{ steps.check.outputs.problemen }}
+        run: |
+          titel="Videocheck: video's die niet werken"
+          nr=$(gh issue list --state open --limit 50 --json number,title --jq ".[] | select(.title == \"$titel\") | .number" | head -1)
+          if [ "${PROBLEMEN:-0}" != "0" ]; then
+            if [ -n "$nr" ]; then
+              gh issue comment "$nr" --body-file videocheck-rapport.md
+            else
+              gh issue create --title "$titel" --body-file videocheck-rapport.md --assignee "${{ github.repository_owner }}"
+            fi
+          elif [ -n "$nr" ]; then
+            gh issue close "$nr" --comment "Alle video's werken weer. Automatisch gesloten door de videocheck."
+          fi
