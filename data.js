@@ -20,8 +20,8 @@
     // Adressen van de gepubliceerde tabbladen (Bestand > Delen > Publiceren op internet, als CSV).
     // Leeg = nog niet gepubliceerd: de app gebruikt dan videos.js.
     const BRON = {
-        videos: "",
-        categorieen: ""
+        videos: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoe7zWFTQrhdwAXQv3ckLRjSR-xwkC4fB6ZJviVZVIM93zCs-ZH25S8w0Aq_dnjtp6mn_daJ7IswPv/pub?single=true&output=csv&gid=0",
+        categorieen: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoe7zWFTQrhdwAXQv3ckLRjSR-xwkC4fB6ZJviVZVIM93zCs-ZH25S8w0Aq_dnjtp6mn_daJ7IswPv/pub?single=true&output=csv&gid=1"
     };
     const CACHE_SLEUTEL = "eac-v3-videolijst";
     const TERUGVAL = "/EA-Cateringv2/videos.js";
