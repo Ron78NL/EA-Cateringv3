@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NAC Performance Support | EA Catering – Instructievideo's</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap">
+    <link rel="stylesheet" href="styles.css?v=3">
+    <meta name="theme-color" content="#0b1530">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="EA Cat. TEST">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+</head>
+<body>
+
+<header class="kop-balk">
+    <div class="hero-top">
+        <div class="merk">
+            <img class="merk-logo" src="nac-logo.png" alt="Navy Academy embleem">
+            <div>
+                <p class="eyebrow">NAC Performance Support</p>
+                <h1>EA Catering</h1>
+            </div>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Taal / Langue / Language">
+            <button type="button" class="lang-btn active" data-lang="nl" title="Nederlands">NL</button>
+            <button type="button" class="lang-btn" data-lang="fr" title="Français">FR</button>
+            <button type="button" class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+    </div>
+
+</header>
+
+<nav class="nav-tabs" id="categorieMenu" aria-label="Categorieën"></nav>
+
+<section class="hero">
+    <div class="hero-body">
+        <p class="hero-sub" data-i18n="sub">Navy Academy Oostende | Instructievideo's keukentechnieken</p>
+        <h2 id="kop">Alle instructievideo's</h2>
+        <p class="hero-intro" data-i18n="intro">Zoek een techniek of kies hierboven een categorie. Tik op een video om hem meteen te bekijken.</p>
+        <div class="zoek">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.6-3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input id="zoekveld" type="search" placeholder="Zoek een video, bijvoorbeeld julienne of bouillon" autocomplete="off" aria-label="Zoeken">
+        </div>
+        <p id="aantal" class="aantal" aria-live="polite"></p>
+    </div>
+</section>
+
+<main class="container">
+    <div id="videoGrid" class="video-grid"></div>
+</main>
+
+<footer>
+    <img src="nac-logo.png" alt="" class="footer-logo">
+    <p data-i18n="footer">&copy; 2026 Navy Academy Oostende (NAC) - Direct support To Production (DS2P). Alle rechten voorbehouden.</p>
+</footer>
+
+<!-- Afspeelscherm -->
+<div id="videoModal" class="video-modal" role="dialog" aria-modal="true" aria-labelledby="videoTitel">
+    <button type="button" class="video-sluit" id="sluit" aria-label="Sluiten">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="video-modal-inner">
+        <h2 class="video-titel" id="videoTitel"></h2>
+        <div class="video-frame" id="videoFrame"></div>
+        <a id="videoExtern" class="video-extern" target="_blank" rel="noopener noreferrer" data-i18n="yt">Bekijk op YouTube</a>
+    </div>
+</div>
+
+<!-- Videolijst en werking komen uit EA-Cateringv2: één lijst voor beide versies -->
+<script src="/EA-Cateringv2/videos.js"></script>
+<script src="/EA-Cateringv2/app.js?v=4"></script>
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js", { scope: "./" });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "id": "/EA-Cateringv3/",
+  "name": "EA Catering TEST (nieuw ontwerp)",
+  "short_name": "EA Cat. TEST",
+  "start_url": "/EA-Cateringv3/",
+  "scope": "/EA-Cateringv3/",
+  "display": "standalone",
+  "background_color": "#0f1c3f",
+  "theme_color": "#0f1c3f",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
