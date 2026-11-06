@@ -1,5 +1,5 @@
 const PREFIX = "eac-v3-";  // eigen voorvoegsel: alle GitHub-apps delen één opslag
-const CACHE = PREFIX + "8";
+const CACHE = PREFIX + "9";
 const BESTANDEN = ["./", "./index.html", "./styles.css", "./nac-logo.png", "/EA-Cateringv2/app.js?v=4", "/EA-Cateringv2/videos.js"];
 
 self.addEventListener("install", (event) => {
