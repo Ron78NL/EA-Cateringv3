@@ -71,10 +71,8 @@
     </div>
 </div>
 
-<!-- Videolijst en werking komen uit EA-Cateringv2: één lijst voor beide versies -->
-<script src="/EA-Cateringv2/videos.js"></script>
-<script src="/EA-Cateringv2/app.js?v=4"></script>
-<script src="favorieten.js?v=1"></script>
+<!-- data.js haalt de videolijst uit de Google Sheet en start daarna app.js en favorieten.js -->
+<script src="data.js?v=1"></script>
 <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js", { scope: "./" });
