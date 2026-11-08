@@ -7,7 +7,7 @@
 //    maar het wordt niet gedeeld met andere telefoons.
 //    localStorage bewaart alleen tekst, daarom zetten we lijsten
 //    om naar tekst (JSON.stringify) en terug (JSON.parse).
-// 2. app.js (gedeeld met V2) tekent de videokaarten. Dit bestand
+// 2. app.js (oorspronkelijk uit V2) tekent de videokaarten. Dit bestand
 //    "kijkt mee" met een MutationObserver: telkens als app.js
 //    nieuwe kaarten tekent, voegen wij er een ster aan toe.
 //    Zo hoeven we app.js niet te veranderen.

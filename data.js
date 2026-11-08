@@ -24,8 +24,8 @@
         categorieen: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoe7zWFTQrhdwAXQv3ckLRjSR-xwkC4fB6ZJviVZVIM93zCs-ZH25S8w0Aq_dnjtp6mn_daJ7IswPv/pub?single=true&output=csv&gid=1"
     };
     const CACHE_SLEUTEL = "eac-v3-videolijst";
-    const TERUGVAL = "/EA-Cateringv2/videos.js";
-    const SCRIPTS = ["/EA-Cateringv2/app.js?v=4", "favorieten.js?v=1"];
+    const TERUGVAL = "videos.js";
+    const SCRIPTS = ["app.js?v=5", "favorieten.js?v=1"];
 
     // ---------- CSV omzetten naar rijen (houdt rekening met komma's binnen "aanhalingstekens") ----------
     function leesCsv(tekst) {
