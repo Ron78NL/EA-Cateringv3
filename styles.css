@@ -277,3 +277,19 @@ footer {
     .video-cat::before { display: none; }
     .bekeken-label { left: .3rem; bottom: .3rem; font-size: .62rem; padding: .1rem .4rem; }
 }
+
+/* ---------- Ingesloten weergave (?embed=1), bijvoorbeeld in BeLADL ---------- */
+/* De omringende site heeft al een kop: wij tonen alleen wat nodig is om een video te vinden. */
+.embed .kop-balk { padding: .5rem clamp(.75rem, 3vw, 1.5rem); }
+.embed .merk-logo, .embed .eyebrow { display: none; }
+.embed .merk h1 { font-size: 1.25rem; }
+.embed .lang-btn { min-height: 2rem; }
+.embed .nav-tabs { padding-top: .5rem; padding-bottom: .5rem; }
+.embed .hero { padding: 1rem clamp(.75rem, 3vw, 1.5rem) 3.25rem; }
+.embed .hero-sub, .embed .hero h2, .embed .hero-intro { display: none; }
+.embed .zoek { max-width: none; }
+.embed #zoekveld { height: 3rem; }
+.embed .aantal { margin-top: .5rem; }
+.embed .container { margin-top: -2.25rem; }
+.embed footer { margin-top: 2rem; padding: 1rem; }
+.embed .footer-logo { display: none; }
