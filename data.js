@@ -25,7 +25,7 @@
     };
     const CACHE_SLEUTEL = "eac-v3-videolijst";
     const TERUGVAL = "videos.js";
-    const SCRIPTS = ["app.js?v=5", "favorieten.js?v=1"];
+    const SCRIPTS = window.EAC_SCRIPTS || ["app.js?v=6", "favorieten.js?v=1"];  // qr.html laadt geen app
 
     // ---------- CSV omzetten naar rijen (houdt rekening met komma's binnen "aanhalingstekens") ----------
     function leesCsv(tekst) {
@@ -112,6 +112,7 @@
             await laadScript(TERUGVAL);       // zet zelf 'videos' en 'categorieen' klaar
         }
         for (const src of SCRIPTS) await laadScript(src);
+        document.dispatchEvent(new Event("eac-klaar"));  // lijst staat klaar (gebruikt door qr.html)
     }
 
     start();

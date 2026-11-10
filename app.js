@@ -261,3 +261,21 @@ document.querySelectorAll(".lang-btn").forEach(b =>
 let startTaal = "nl";
 try { startTaal = localStorage.getItem("nac-lang") || "nl"; } catch (e) {}
 zetTaal(TEKST[startTaal] ? startTaal : "nl");
+
+// ===== DIRECTE LINK (QR-code aan de werkplek) =====
+// LEERMODUS: een adres als  .../EA-Cateringv3/?v=stCqu0-vqB4  opent meteen
+// die video, en  ?cat=sauzen  opent meteen die categorie. Zo brengt één scan
+// met de telefoon de leerling direct bij de juiste techniek. De QR-codes
+// zelf maak en print je via qr.html.
+(function directeLink() {
+    const p = new URLSearchParams(location.search);
+    const cat = p.get("cat");
+    if (cat && categorieen.some(c => c.id === cat)) {
+        kiesCategorie(cat, categorieMenu.querySelector(`[data-id="${cat}"]`));
+    }
+    const video = videos.find(v => v.id === p.get("v"));
+    if (video) {
+        if (!cat) kiesCategorie(video.categorie, categorieMenu.querySelector(`[data-id="${video.categorie}"]`));
+        openVideo(video);
+    }
+})();

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EA Catering – QR-codes voor de werkplek</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap">
+<!--
+  LEERMODUS - wat doet deze pagina?
+  Hij haalt dezelfde videolijst op als de app (uit de Google Sheet, via data.js)
+  en maakt per video een QR-code. Scant een leerling die met zijn telefoon,
+  dan opent de app meteen die video. Komt er een video bij in de Sheet,
+  dan staat hij hier vanzelf ook tussen: gewoon opnieuw printen.
+-->
+<style>
+:root { --navy:#0b1530; --navy2:#1e335f; --goud:#c5a059; --goud-tekst:#7d5f26; --papier:#f7f5f0; --lijn:#e6e1d6; --tekst:#1c2840; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:Inter,"Segoe UI",system-ui,sans-serif; background:var(--papier); color:var(--tekst); }
+.balk { background:linear-gradient(160deg,var(--navy),var(--navy2)); color:#fff; padding:1.2rem clamp(1rem,4vw,2.5rem); }
+.balk h1 { font-family:"Playfair Display",Georgia,serif; font-size:1.6rem; }
+.balk p { color:var(--goud); font-size:.8rem; letter-spacing:.15em; text-transform:uppercase; font-weight:600; }
+.keuzes { max-width:1100px; margin:1.2rem auto; padding:0 1rem; display:flex; flex-wrap:wrap; gap:.8rem 1.2rem; align-items:end; }
+.keuzes label { display:flex; flex-direction:column; font-size:.8rem; font-weight:600; gap:.25rem; }
+select, button { font:inherit; padding:.55rem .8rem; border:1px solid var(--lijn); border-radius:8px; background:#fff; }
+button { background:var(--navy); color:#fff; border-color:var(--navy); cursor:pointer; font-weight:600; }
+button:hover { background:var(--navy2); }
+.uitleg { max-width:1100px; margin:0 auto 1rem; padding:0 1rem; font-size:.9rem; color:#5b6474; }
+#blad { max-width:1100px; margin:0 auto 3rem; padding:0 1rem; display:grid; gap:12px; }
+#blad.klein { grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); }
+#blad.groot { grid-template-columns:1fr; }
+
+.label { background:#fff; border:1.5px solid var(--navy); border-radius:12px; padding:14px; display:flex; flex-direction:column; align-items:center; text-align:center; break-inside:avoid; page-break-inside:avoid; position:relative; overflow:hidden; }
+.label::before { content:""; position:absolute; inset:0 0 auto 0; height:6px; background:var(--goud); }
+.label .cat { font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--goud-tekst); margin-top:4px; }
+.label .titel { font-family:"Playfair Display",Georgia,serif; font-weight:700; font-size:1.05rem; line-height:1.25; margin:.25rem 0 .5rem; min-height:2.6em; display:flex; align-items:center; }
+.label svg { width:100%; max-width:170px; height:auto; display:block; }
+.label .scan { margin-top:.5rem; font-size:.72rem; color:#5b6474; display:flex; align-items:center; gap:.4rem; }
+.label .scan img { width:18px; height:18px; }
+.label.categorie { background:var(--navy); color:#fff; }
+.label.categorie .titel { color:#fff; }
+.label.categorie .cat, .label.categorie .scan { color:var(--goud); }
+.label.categorie svg { background:#fff; border-radius:6px; padding:6px; }
+
+#blad.groot .label { min-height:250mm; justify-content:center; padding:20mm; }
+#blad.groot .label .titel { font-size:2.4rem; min-height:0; margin:1rem 0 2rem; }
+#blad.groot .label .cat { font-size:1rem; }
+#blad.groot .label svg { max-width:120mm; }
+#blad.groot .label .scan { font-size:1.1rem; margin-top:1.5rem; }
+#blad.groot .label .scan img { width:32px; height:32px; }
+
+@media print {
+  @page { size:A4; margin:10mm; }
+  body { background:#fff; }
+  .balk, .keuzes, .uitleg { display:none; }
+  #blad { margin:0; padding:0; max-width:none; gap:6mm; }
+  #blad.klein { grid-template-columns:repeat(3,1fr); grid-auto-rows:62mm; }
+  #blad.klein .label { padding:3mm; justify-content:center; }
+  #blad.klein .label svg { max-width:36mm; }
+  #blad.klein .label .titel { font-size:10pt; min-height:0; margin:1mm 0 2mm; }
+  #blad.groot .label { break-after:page; page-break-after:always; }
+  .label { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+</head>
+<body>
+<header class="balk">
+  <p>NAC Performance Support · EA Catering</p>
+  <h1>QR-codes voor de werkplek</h1>
+</header>
+
+<div class="keuzes">
+  <label>Categorie
+    <select id="kiesCat"><option value="">Alle categorieën</option></select>
+  </label>
+  <label>Formaat
+    <select id="kiesFormaat">
+      <option value="klein">Stickers – 12 per A4</option>
+      <option value="groot">Poster – 1 per A4 (voor aan de wand)</option>
+    </select>
+  </label>
+  <label>Taal op het label
+    <select id="kiesTaal">
+      <option value="nl">Nederlands</option>
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+    </select>
+  </label>
+  <button type="button" onclick="window.print()">Printen</button>
+</div>
+<p class="uitleg">Hang het label bij de plek waar de techniek gebeurt, bijvoorbeeld de code van "Reduceren van bouillon" bij de bouillonketel. Een donker label opent de hele categorie. <span id="telling"></span></p>
+
+<main id="blad" class="klein"></main>
+
+<script>window.EAC_SCRIPTS = [];  // geen app laden, alleen de videolijst</script>
+<script src="qrcode.js"></script>
+<script src="data.js?v=4"></script>
+<script>
+document.addEventListener("eac-klaar", () => {
+  const blad = document.getElementById("blad");
+  const kiesCat = document.getElementById("kiesCat");
+  const kiesFormaat = document.getElementById("kiesFormaat");
+  const kiesTaal = document.getElementById("kiesTaal");
+  const SCAN = { nl: "Scan met je telefoon", fr: "Scannez avec votre téléphone", en: "Scan with your phone" };
+  const ALLE = { nl: "Alle video's in deze categorie", fr: "Toutes les vidéos de cette catégorie", en: "All videos in this category" };
+
+  // Adres van de app zelf, zodat de codes ook kloppen als de site verhuist
+  const basis = new URL("./", location.href).href;
+
+  const titelVan = (v, t) => (t !== "nl" && v[t]) || v.titel.replace(/^Instructie(film)?\s+/i, "");
+  const naamVan = (c, t) => (t !== "nl" && c[t]) || c.naam;
+
+  categorieen.forEach(c => kiesCat.add(new Option(c.naam, c.id)));
+
+  function qrSvg(tekst) {
+    const qr = qrcode(0, "M");          // M = herstelt tot 15% schade (vet, krassen)
+    qr.addData(tekst); qr.make();
+    return qr.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+  }
+
+  function label(soort, kop, cat, url, t) {
+    const d = document.createElement("div");
+    d.className = "label " + soort;
+    d.dataset.url = url;
+    d.innerHTML = `<span class="cat"></span><span class="titel"></span>${qrSvg(url)}
+      <span class="scan"><img src="nac-logo.png" alt="">${SCAN[t]}</span>`;
+    d.querySelector(".cat").textContent = cat;
+    d.querySelector(".titel").textContent = kop;
+    return d;
+  }
+
+  function teken() {
+    const t = kiesTaal.value;
+    blad.className = kiesFormaat.value;
+    blad.replaceChildren();
+    let n = 0;
+    categorieen.filter(c => !kiesCat.value || c.id === kiesCat.value).forEach(c => {
+      const lijst = videos.filter(v => v.categorie === c.id);
+      if (!lijst.length) return;
+      blad.appendChild(label("categorie", naamVan(c, t), ALLE[t], `${basis}?cat=${encodeURIComponent(c.id)}`, t));
+      lijst.forEach(v => { blad.appendChild(label("video", titelVan(v, t), naamVan(c, t), `${basis}?v=${encodeURIComponent(v.id)}`, t)); n++; });
+    });
+    document.getElementById("telling").textContent = `${n} video's op dit blad.`;
+  }
+
+  [kiesCat, kiesFormaat, kiesTaal].forEach(el => el.addEventListener("change", teken));
+  teken();
+});
+</script>
+</body>
+</html>
