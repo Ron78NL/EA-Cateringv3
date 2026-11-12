@@ -281,7 +281,9 @@ footer {
 /* ---------- Ingesloten weergave (?embed=1), bijvoorbeeld in BeLADL ---------- */
 /* De omringende site heeft al een kop: wij tonen alleen wat nodig is om een video te vinden. */
 .embed .kop-balk { padding: .5rem clamp(.75rem, 3vw, 1.5rem); }
-.embed .merk-logo, .embed .eyebrow { display: none; }
+.embed .merk-logo { width: 2.75rem; height: 2.75rem; }
+.embed .merk { gap: .75rem; }
+.embed .eyebrow { display: none; }
 .embed .merk h1 { font-size: 1.25rem; }
 .embed .lang-btn { min-height: 2rem; }
 .embed .nav-tabs { padding-top: .5rem; padding-bottom: .5rem; }
